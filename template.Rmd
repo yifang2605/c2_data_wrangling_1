@@ -1,0 +1,82 @@
+---
+title: "Data Import"
+output:
+  github.document
+---
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(haven)
+```
+
+
+I'm an R Markdown document! 
+
+# Data Import: 
+
+## CSVs
+
+Import data using `readr` package
+
+```{r}
+litters_df = read_csv("data/FAS_litters.csv")
+litters_df = janitor::clean_names(litters_df)
+```
+look at the data
+
+```{r eval=FALSE}
+view(litters_df)
+skimr::skim(litters_df)
+```
+`read_csv` options: change na, skip first 2 rows
+
+```{r}
+?read_csv
+litters_df = read_csv("data/FAS_litters.csv", na = c("NA", ""), skip = 2)
+```
+
+## Excel sheet
+
+excel sheet
+```{r}
+mlb_df = read_excel("data/mlb11.xlsx")
+```
+
+```{r eval=FALSE}
+view(mlb_df)
+```
+
+```{r}
+?read_excel
+lotr_word_df = 
+  read_excel("data/LotR_Words.xlsx",
+             range = "B3:D6")
+```
+
+```{r eval=FALSE}
+view(lotr_word_df)
+```
+
+## SAS dataset
+
+```{r}
+public_pulse_df = read_sas("data/public_pulse_data.sas7bdat")
+```
+
+```{r eval=FALSE}
+view(public_pulse_df)
+```
+
+# Data Export
+
+```{r}
+write_csv(lotr_word_df, "results/lotr_word_df.csv")
+```
+
+# Why not base R
+
+```{r}
+do_not_do_this_df = read.csv("data/FAS_litters.csv")
+view(do_not_do_this_df)
+```
