@@ -56,7 +56,9 @@ select(litters_data, group:gd_of_birth)
 
 You can also specify columns you'd like to remove:
 ```{r}
-select(litters_data, -pups_survive)
+select(litters_data, -pups_survive, -pups_born_alive, -pups_dead_birth)
+
+select(litters_data, -group:-gd_of_birth)
 ```
 
 You can rename variables as part of this process:
@@ -99,7 +101,7 @@ Some ways you might filter the litters data are:
 * `gd_of_birth == 20`
 * `pups_born_alive >= 2`
 * `pups_survive != 4`
-* `!(pups_survive == 4)`
+* `!((pups_survive == 4) & (gd_of_birth == 20))`
 * `group %in% c("Con7", "Con8")`
 * `group == "Con7" & gd_of_birth == 20`
 
@@ -223,7 +225,7 @@ litters_data
 
 All three approaches result in the same dataset, but the piped commands are by far the most straightforward. The easiest way to read `%>%` is "then"; the keyboard shortcuts are Ctrl + Shift + M (Windows) and Cmd + Shift + M (Mac).
 
-The functions in `dplyr` (and much of the `tidyverse`) are designed to work smoothly with the pipe operator. By default, the pipe will take the result of one function call and use that as the first argument of the next function call; by design, functions in `dplyr` will take a tibble as an input and return a tibble as a result. As a consequence, functions in `dplyr` are easy to connect in a data cleaning chain. You can make this more explicit by using `.` as a placeholder for the result of the preceding call:
+The functions in `dplyr` (and much of the `tidyverse`) are designed to work smoothly with the pipe operator. By default, the pipe will take the result of one function call and use that as the first argument of the next function call; by design, functions in `dplyr` will **take a tibble as an input and return a tibble as a result**. As a consequence, functions in `dplyr` are easy to connect in a data cleaning chain. You can make this more explicit by using `.` as a placeholder for the result of the preceding call:
 
 ```{r}
 litters_data = 
